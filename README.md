@@ -2,6 +2,9 @@
 
 Aplicación web desarrollada en **Angular** con **Bootstrap 5** e **IndexedDB (`idb`)** para la consulta de catálogo tecnológico, registro de pedidos con control de stock, historial filtrado, gestión de detalle/cancelación y panel administrativo.
 
+- **Repositorio:** https://github.com/jennimamani600-source/tienda-examen-
+- **Demo en vivo:** https://jennimamani600-source.github.io/tienda-examen-/
+
 ## Funcionalidades Principales
 - **Catálogo de Productos (`/`):** Consulta en tarjetas responsivas con búsqueda por texto y filtro por categoría combinados.
 - **Registro de Pedido (`/registro`):** Formulario reactivo con validaciones de campos obligatorios, validación de solo letras en el nombre del cliente, cálculo automático de total y control de stock disponible.
@@ -16,5 +19,5 @@ Aplicación web desarrollada en **Angular** con **Bootstrap 5** e **IndexedDB (`
 ## Instalación y Ejecución
 1. Clonar el repositorio:
    ```bash
-   git clone <URL_DE_TU_REPOSITORIO_EN_GITHUB>
-   cd tienda-examen
+   git clone [https://github.com/jennimamani600-source/tienda-examen-.git](https://github.com/jennimamani600-source/tienda-examen-.git)
+   cd tienda-examen-
