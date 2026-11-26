@@ -1,0 +1,55 @@
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+  <h2 class="mb-0">Historial de Pedidos</h2>
+  
+  <div class="d-flex align-items-center gap-2">
+    <label class="fw-bold text-nowrap">Filtrar estado:</label>
+    <select class="form-select" [(ngModel)]="filtroEstado">
+      <option value="Todos">Todos</option>
+      <option value="Completado">Completados</option>
+      <option value="Cancelado">Cancelados</option>
+    </select>
+  </div>
+</div>
+
+@if (pedidosFiltrados.length === 0) {
+  <div class="alert alert-secondary">
+    No hay pedidos registrados con ese estado. <a routerLink="/registro" class="alert-link">Crea uno aquí</a>.
+  </div>
+} @else {
+  <div class="table-responsive shadow-sm rounded-4">
+    <table class="table table-hover align-middle mb-0 bg-white">
+      <thead style="background-color: #d8e2dc; color: #3b4d43;">
+        <tr>
+          <th>#ID</th>
+          <th>Fecha</th>
+          <th>Cliente</th>
+          <th>Producto</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ped of pedidosFiltrados; track ped.id) {
+          <tr>
+            <td class="fw-bold">#{{ ped.id }}</td>
+            <td>{{ ped.fecha | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ ped.cliente | titlecase }}</td>
+            <td>{{ ped.productoNombre }} (x{{ ped.cantidad }})</td>
+            <td class="fw-bold">{{ ped.total | currency:'BOB ':'symbol':'1.2-2' }}</td>
+            <td>
+              <span class="badge" [ngClass]="ped.estado === 'Completado' ? 'badge-pastel-ok' : 'badge-pastel-no'">
+                {{ ped.estado }}
+              </span>
+            </td>
+            <td>
+              <a [routerLink]="['/pedidos', ped.id]" class="btn btn-sm btn-pastel-primary">
+                Ver detalle
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

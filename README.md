@@ -1,59 +1,20 @@
-# TiendaExamen
+# Jenni Store — Sistema de Gestión de Pedidos e Inventario
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.3.0.
+Aplicación web desarrollada en **Angular** con **Bootstrap 5** e **IndexedDB (`idb`)** para la consulta de catálogo tecnológico, registro de pedidos con control de stock, historial filtrado, gestión de detalle/cancelación y panel administrativo.
 
-## Development server
+## Funcionalidades Principales
+- **Catálogo de Productos (`/`):** Consulta en tarjetas responsivas con búsqueda por texto y filtro por categoría combinados.
+- **Registro de Pedido (`/registro`):** Formulario reactivo con validaciones de campos obligatorios, validación de solo letras en el nombre del cliente, cálculo automático de total y control de stock disponible.
+- **Historial de Pedidos (`/historial`):** Listado con formato de fecha, moneda y estado, filtro por estado (`Completado` / `Cancelado`) y acceso al detalle.
+- **Detalle y Cancelación (`/pedidos/:id`):** Consulta persistente por identificador (soporta recarga de página con `F5`), manejo de ID inexistente y cancelación con devolución automática de existencias al inventario.
+- **Panel Administrativo (`/admin`):** Gestión de inventario y alta de nuevos productos (PIN de acceso: `1234`).
 
-To start a local development server, run:
+## Requisitos Previos
+- [Node.js](https://nodejs.org/) (v18 o superior)
+- [Angular CLI](https://angular.dev/tools/cli) (`npm install -g @angular/cli`)
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Instalación y Ejecución
+1. Clonar el repositorio:
+   ```bash
+   git clone <URL_DE_TU_REPOSITORIO_EN_GITHUB>
+   cd tienda-examen

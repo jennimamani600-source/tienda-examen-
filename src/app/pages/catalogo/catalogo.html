@@ -1,0 +1,72 @@
+<!-- Cabecera con buscador y botón desplegable a un costado -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+  <h2 class="mb-0">Catálogo de Productos</h2>
+
+  <div class="d-flex flex-wrap gap-2 align-items-center">
+    <!-- Buscador -->
+    <input 
+      type="text" 
+      class="form-control rounded-pill px-3" 
+      style="width: 220px;"
+      placeholder="Buscar producto..." 
+      [(ngModel)]="textoBusqueda">
+
+    <!-- Botón desplegable de Categorías -->
+    <div class="position-relative">
+      <button 
+        class="btn btn-pastel-primary dropdown-toggle rounded-pill px-3 text-nowrap" 
+        type="button" 
+        (click)="menuCategoriasAbierto = !menuCategoriasAbierto">
+        {{ categoriaSeleccionada ? categoriaSeleccionada : 'Categorías' }}
+      </button>
+
+      @if (menuCategoriasAbierto) {
+        <div class="card shadow border-0 rounded-4 p-1 position-absolute end-0 mt-2" style="min-width: 190px; z-index: 1000;">
+          <button 
+            class="dropdown-item rounded-3 py-2 text-start" 
+            [class.active]="categoriaSeleccionada === ''"
+            (click)="seleccionarCategoria('')">
+            Todas las categorías
+          </button>
+          <hr class="my-1 opacity-25">
+          <button 
+            class="dropdown-item rounded-3 py-2 text-start" 
+            [class.active]="categoriaSeleccionada === 'Laptops'"
+            (click)="seleccionarCategoria('Laptops')">
+            Laptops
+          </button>
+          <button 
+            class="dropdown-item rounded-3 py-2 text-start" 
+            [class.active]="categoriaSeleccionada === 'Periféricos'"
+            (click)="seleccionarCategoria('Periféricos')">
+            Periféricos
+          </button>
+          <button 
+            class="dropdown-item rounded-3 py-2 text-start" 
+            [class.active]="categoriaSeleccionada === 'Monitores'"
+            (click)="seleccionarCategoria('Monitores')">
+            Monitores
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Cuadrícula de tarjetas de productos -->
+@if (productosFiltrados.length === 0) {
+  <div class="alert alert-secondary text-center rounded-4 py-4">
+    No se encontraron productos que coincidan con tu búsqueda.
+  </div>
+} @else {
+  <div class="row g-4">
+    @for (item of productosFiltrados; track item.id) {
+      <div class="col-12 col-sm-6 col-lg-4">
+        <app-producto-card 
+          [producto]="item" 
+          (pedir)="irAPedir($event)">
+        </app-producto-card>
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,68 @@
+@if (cargando) {
+  <div class="text-center py-5">
+    <div class="spinner-border text-secondary" role="status"></div>
+  </div>
+} @else if (!pedido) {
+  <div class="alert alert-danger text-center p-4 border shadow-sm rounded-3">
+    <h5 class="fw-bold">Pedido no encontrado</h5>
+    <p class="small mb-3">El identificador solicitado no existe en el registro.</p>
+    <a routerLink="/historial" class="btn btn-dark btn-sm">Volver al Historial</a>
+  </div>
+} @else {
+  <div class="row justify-content-center py-3">
+    <div class="col-12 col-md-8 col-lg-5">
+      
+      @if (mensajeExito) {
+        <div class="alert alert-success py-2 small rounded-2">{{ mensajeExito }}</div>
+      }
+
+      <div class="card border shadow-sm rounded-3 bg-white">
+        <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center py-3">
+          <h5 class="fw-bold text-dark mb-0">Orden #{{ pedido.id }}</h5>
+          <span class="badge rounded-pill fw-normal px-2 py-1" 
+                [ngClass]="pedido.estado === 'Completado' ? 'bg-success-subtle text-success border border-success-subtle' : 'bg-danger-subtle text-danger border border-danger-subtle'">
+            {{ pedido.estado }}
+          </span>
+        </div>
+
+        <div class="card-body p-4">
+          <ul class="list-group list-group-flush mb-4">
+            <li class="list-group-item px-0 d-flex justify-content-between">
+              <span class="text-muted small">Cliente</span>
+              <span class="fw-semibold text-dark">{{ pedido.cliente | titlecase }}</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+              <span class="text-muted small">Fecha</span>
+              <span class="text-dark">{{ pedido.fecha | date:'dd/MM/yyyy HH:mm' }}</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+              <span class="text-muted small">Artículo</span>
+              <span class="fw-semibold text-dark">{{ pedido.productoNombre }}</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+              <span class="text-muted small">Cantidad</span>
+              <span class="text-dark">{{ pedido.cantidad }} unidad(es)</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between pt-3">
+              <span class="fw-bold text-dark">Total Pagado</span>
+              <span class="fs-5 fw-bold text-dark font-monospace">{{ pedido.total | currency:'BOB ':'symbol':'1.2-2' }}</span>
+            </li>
+          </ul>
+
+          <div class="d-flex justify-content-between gap-2">
+            <a routerLink="/historial" class="btn btn-outline-secondary btn-sm px-3">
+              ← Volver
+            </a>
+
+            @if (pedido.estado === 'Completado') {
+              <button class="btn btn-outline-danger btn-sm px-3" (click)="cancelar()">
+                Cancelar Pedido y Devolver Stock
+              </button>
+            }
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+}

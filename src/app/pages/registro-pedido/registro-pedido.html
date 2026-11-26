@@ -1,0 +1,128 @@
+<div class="py-3">
+  <!-- Encabezado superior limpio -->
+  <div class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1 small">
+          <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none text-muted">Catálogo</a></li>
+          <li class="breadcrumb-item active fw-medium text-dark">Nueva Orden</li>
+        </ol>
+      </nav>
+      <h3 class="fw-bold text-dark mb-0">Generar Orden de Compra</h3>
+    </div>
+    <a routerLink="/" class="btn btn-outline-secondary btn-sm px-3">
+      ← Volver al catálogo
+    </a>
+  </div>
+
+  @if (mensajeError) {
+    <div class="alert alert-danger py-2 small rounded-2 mb-4">
+      {{ mensajeError }}
+    </div>
+  }
+
+  <form [formGroup]="pedidoForm" (ngSubmit)="guardarPedido()">
+    <div class="row g-4">
+      
+      <!-- Columna izquierda: Datos del pedido -->
+      <div class="col-12 col-lg-7">
+        <div class="card border shadow-sm rounded-3 bg-white">
+          <div class="card-body p-4">
+            <h6 class="fw-bold text-dark mb-3 pb-2 border-bottom">1. Detalles del Cliente y Artículo</h6>
+
+            <!-- Cliente -->
+            <div class="mb-3">
+              <label class="form-label small fw-semibold text-muted mb-1">Nombre completo del cliente</label>
+              <input 
+                type="text" 
+                class="form-control py-2" 
+                formControlName="cliente" 
+                placeholder="Ej. Carlos Mendoza"
+                [class.is-invalid]="pedidoForm.get('cliente')?.invalid && pedidoForm.get('cliente')?.touched">
+              @if (pedidoForm.get('cliente')?.invalid && pedidoForm.get('cliente')?.touched) {
+                <div class="invalid-feedback">Ingresa un nombre válido (mínimo 3 caracteres).</div>
+              }
+            </div>
+
+            <!-- Producto -->
+            <div class="mb-3">
+              <label class="form-label small fw-semibold text-muted mb-1">Seleccionar producto</label>
+              <select 
+                class="form-select py-2" 
+                formControlName="productoId"
+                [class.is-invalid]="pedidoForm.get('productoId')?.invalid && pedidoForm.get('productoId')?.touched">
+                <option value="">Elige un artículo del inventario...</option>
+                @for (prod of productos; track prod.id) {
+                  <option [value]="prod.id" [disabled]="prod.stock === 0">
+                    {{ prod.nombre }} — {{ prod.precio | currency:'BOB ':'symbol':'1.2-2' }} ({{ prod.stock }} disp.)
+                  </option>
+                }
+              </select>
+              @if (pedidoForm.get('productoId')?.invalid && pedidoForm.get('productoId')?.touched) {
+                <div class="invalid-feedback">Debes seleccionar un producto.</div>
+              }
+            </div>
+
+            <!-- Cantidad -->
+            <div class="mb-1">
+              <label class="form-label small fw-semibold text-muted mb-1">Cantidad a solicitar</label>
+              <input 
+                type="number" 
+                class="form-control py-2" 
+                style="max-width: 160px;"
+                formControlName="cantidad" 
+                min="1"
+                [class.is-invalid]="pedidoForm.get('cantidad')?.invalid && pedidoForm.get('cantidad')?.touched">
+              @if (pedidoForm.get('cantidad')?.invalid && pedidoForm.get('cantidad')?.touched) {
+                <div class="invalid-feedback">Ingresa una cantidad válida mayor a 0.</div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Resumen de pago -->
+      <div class="col-12 col-lg-5">
+        <div class="card border shadow-sm rounded-3 bg-white">
+          <div class="card-body p-4">
+            <h6 class="fw-bold text-dark mb-3 pb-2 border-bottom">2. Resumen de Orden</h6>
+
+            <div class="d-flex justify-content-between align-items-center mb-2 small">
+              <span class="text-muted">Cliente:</span>
+              <span class="fw-medium text-dark">{{ pedidoForm.get('cliente')?.value || 'Sin especificar' }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-2 small">
+              <span class="text-muted">Cantidad:</span>
+              <span class="fw-medium text-dark">{{ pedidoForm.get('cantidad')?.value || 0 }} unidad(es)</span>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3 small">
+              <span class="text-muted">Moneda:</span>
+              <span class="badge bg-light text-dark border">BOB (Bolivianos)</span>
+            </div>
+
+            <div class="bg-light border rounded-2 p-3 mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-semibold text-dark">Total a Pagar</span>
+                <span class="fs-4 fw-bold text-dark font-monospace">
+                  {{ totalCalculado | currency:'BOB ':'symbol':'1.2-2' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-dark py-2 fw-medium">
+                Confirmar y Registrar Pedido
+              </button>
+              <a routerLink="/" class="btn btn-outline-secondary btn-sm py-2">
+                Cancelar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
